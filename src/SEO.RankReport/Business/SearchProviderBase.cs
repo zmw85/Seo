@@ -40,10 +40,13 @@ namespace SEO.RankReport.Business
 
         public virtual IList<SearchIndex> PerformSearch(string keyword, string urlPrefix, int? limit = 100)
         {
+            // merge the url with "keyword" & "page limit"
             string searchUrl = string.Format(searchParameters.SearchEngineUrl, WebUtility.UrlEncode(keyword), limit);
 
+            // making the http request
             var httpResponse = MakeHttpRequest(searchUrl);
 
+            // parse the results
             IList<SearchIndex> results = new List<SearchIndex>();
 
             string responseText = string.Empty;
