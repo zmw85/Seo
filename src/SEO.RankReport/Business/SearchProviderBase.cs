@@ -14,6 +14,11 @@ namespace SEO.RankReport.Business
     {
         private SearchParameters searchParameters = null;
 
+        public SearchParameters SearchParameters
+        {
+            set { searchParameters = value; }
+        }
+
         public SearchProviderBase(SearchParameters parameters = null)
         {
             if (parameters != null)
@@ -37,20 +42,19 @@ namespace SEO.RankReport.Business
         {
             string searchUrl = string.Format(searchParameters.SearchEngineUrl, WebUtility.UrlEncode(keyword), limit);
 
-            var request = WebRequest.Create(new Uri(searchUrl)) as HttpWebRequest;
-            var responseTask = request.GetResponseAsync();
-            responseTask.Wait();
-            var httpResponse = (HttpWebResponse)responseTask.Result;
+            var httpResponse = MakeHttpRequest(searchUrl);
 
             IList<SearchIndex> results = new List<SearchIndex>();
+
+            string responseText = string.Empty;
 
             using (var responseStream = httpResponse.GetResponseStream())
             using (var streamReader = new StreamReader(responseStream, Encoding.UTF8))
             {
-                var responseText = streamReader.ReadToEnd();
-                results = ParseResponse(responseText, urlPrefix);
+                responseText = streamReader.ReadToEnd();
             }
 
+            results = ParseResponse(responseText, urlPrefix);
             return results;
         }
 
@@ -91,6 +95,16 @@ namespace SEO.RankReport.Business
             }
 
             return indexes;
+        }
+
+        public HttpWebResponse MakeHttpRequest(string url)
+        {
+            var request = WebRequest.Create(new Uri(url)) as HttpWebRequest;
+            var responseTask = request.GetResponseAsync();
+            responseTask.Wait();
+            var httpResponse = (HttpWebResponse)responseTask.Result;
+
+            return httpResponse;
         }
     }
 }

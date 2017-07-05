@@ -3,6 +3,9 @@
     handleSearch(e) {
         e.preventDefault();
 
+        $('#btnSearch').text('Searching...').prop('disabled', true);
+        this.props.search([]);
+
         $.ajax({
             url: '/api/search',
             data: {
@@ -10,6 +13,7 @@
                 urlPrefix: this.refs.urlPrefix.value
             }
         }).done(function (res) {
+            $('#btnSearch').text('Search').prop('disabled', false);
             this.props.search(res);
         }.bind(this));
         
@@ -40,7 +44,7 @@
                                     <input name="urlPrefix" type="text" className="form-control" ref="urlPrefix" placeholder="Url Prefix" defaultValue="www.infotrack.com" />
                                 </div>
 
-                                <button type="submit" className="btn btn-primary">Search</button>
+                                <button type="submit" className="btn btn-primary" id="btnSearch">Search</button>
 
                             </fieldset>
 

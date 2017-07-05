@@ -23,7 +23,8 @@
     "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0",
     "React.AspNet": "3.0.1",
-    "Webpack": "4.0.0"
+    "Webpack": "4.0.0",
+    "xunit": "2.2.0"
   },
 
   "tools": {

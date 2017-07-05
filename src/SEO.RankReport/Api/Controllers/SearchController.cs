@@ -30,7 +30,7 @@ namespace SEO.RankReport.Api.Controllers
             keyword = string.IsNullOrWhiteSpace(keyword) ? "online title search" : keyword.Trim();
             urlPrefix = (string.IsNullOrWhiteSpace(urlPrefix) ? "www.infotrack.com" : urlPrefix.Trim()).Replace("http://", string.Empty).Replace("https://", string.Empty);
 
-            var googleSearch = new GoogleSearchProvider();
+            var googleSearch = GoogleSearchProvider.GetInstance();
             var indexes = googleSearch.PerformSearch(keyword, urlPrefix, limit);
 
             if (indexes.Any())

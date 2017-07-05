@@ -13,7 +13,7 @@ namespace SEO.RankReport.Controllers
             return View();
         }
 
-        public IActionResult About()
+        public IActionResult Readme()
         {
             ViewData["Message"] = "Your application description page.";
 

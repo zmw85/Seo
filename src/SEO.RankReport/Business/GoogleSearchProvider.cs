@@ -7,9 +7,16 @@ namespace SEO.RankReport.Business
 {
     public class GoogleSearchProvider : SearchProviderBase
     {
-        public GoogleSearchProvider(SearchParameters parameters = null) : base(parameters)
+        public static GoogleSearchProvider GetInstance(SearchParameters parameters = null)
         {
-
+            instance = instance ?? new GoogleSearchProvider();
+            if (parameters != null)
+            {
+                instance.SearchParameters = parameters;
+            }
+            return instance;
         }
+
+        private static GoogleSearchProvider instance = null;
     }
 }
